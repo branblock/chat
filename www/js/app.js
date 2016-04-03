@@ -18,15 +18,15 @@
     $stateProvider
       .state('rooms', {
         url: '/rooms',
-        templateUrl: '/templates/rooms.html',
+        templateUrl: '/rooms.html',
         controller: 'RoomsListCtrl'
       })
       .state('room', {
         url: '/rooms/:roomId',
-        templateUrl: '/templates/room.html',
+        templateUrl: '/room.html',
         controller: 'RoomDetailCtrl'
       });
-    $urlRouterProvider.otherwise('/rooms');
+    $urlRouterProvider.otherwise('rooms');
   }
 
   angular

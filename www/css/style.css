@@ -1,5 +1,9 @@
 /* Empty. Add your own CSS if you like */
 
+.card .item:first-child { font-size: 14px; }
+
+.card .item:last-child { font-size: 15px; }
+
 .footerInput { width: 100%; }
 
-input[type="text"] { padding-left: 10px; }
+input[type="text"] { padding-left: 5px; }

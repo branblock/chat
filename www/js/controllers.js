@@ -2,8 +2,8 @@
 
   'use strict';
 
-  function RoomsListCtrl($scope, $ionicPopup, Rooms) {
-    $scope.rooms = Rooms.all;
+  function RoomsListCtrl($scope, $ionicPopup, RoomFactory) {
+    $scope.rooms = RoomFactory.allRooms;
 
     $scope.createRoom = function() {
       var timestamp = new Date().valueOf();
@@ -23,8 +23,14 @@
     };
   }
 
-  function RoomDetailCtrl($scope, $stateParams, $ionicHistory, Rooms) {
-    $scope.room = Rooms.get($stateParams.roomId);
+  function RoomDetailCtrl($scope, $stateParams, $ionicHistory, RoomFactory) {
+    $scope.room = RoomFactory.room($stateParams.roomId);
+    $scope.messages = RoomFactory.messages($scope.room.$id);
+
+    $scope.sendMessage = function(newMessage) {
+      RoomFactory.send($scope.newMessage, $scope.room.$id);
+      $scope.newMessage = '';
+    };
 
     $scope.backToRoomsList = function() {
       $ionicHistory.goBack();
@@ -33,6 +39,6 @@
 
   angular
     .module('chat')
-    .controller('RoomsListCtrl', ['$scope', '$ionicPopup', 'Rooms', RoomsListCtrl])
-    .controller('RoomDetailCtrl', ['$scope', '$stateParams', '$ionicHistory', 'Rooms', RoomDetailCtrl]);
+    .controller('RoomsListCtrl', ['$scope', '$ionicPopup', 'RoomFactory', RoomsListCtrl])
+    .controller('RoomDetailCtrl', ['$scope', '$stateParams', '$ionicHistory', 'RoomFactory', RoomDetailCtrl]);
 })();
