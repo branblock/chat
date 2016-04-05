@@ -21,3 +21,28 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+.bar-stable .button {
+  color: #000;
+}
+
+.bar-stable .ionicons, .footer-bar .ionicons {
+  color: #000;
+}
+
+.bar.bar-stable .title {
+  color: #000;
+}
+
+body {
+  color: #000
+}
+
+.footerInput {
+  width: 100% !important;
+}
+
+input[type="text"] {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding-left: 10px;
+}

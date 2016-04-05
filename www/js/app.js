@@ -16,17 +16,22 @@
 
   function config($stateProvider, $urlRouterProvider) {
     $stateProvider
+      .state('home', {
+        url: '/home',
+        templateUrl: '/templates/home.html',
+        controller: 'HomeCtrl'
+      })
       .state('rooms', {
         url: '/rooms',
-        templateUrl: '/rooms.html',
+        templateUrl: '/templates/rooms.html',
         controller: 'RoomsListCtrl'
       })
       .state('room', {
         url: '/rooms/:roomId',
-        templateUrl: '/room.html',
+        templateUrl: '/templates/room.html',
         controller: 'RoomDetailCtrl'
       });
-    $urlRouterProvider.otherwise('rooms');
+    $urlRouterProvider.otherwise('home');
   }
 
   angular

@@ -37,8 +37,11 @@
     };
   }
 
+  function HomeCtrl($scope) {}
+
   angular
     .module('chat')
     .controller('RoomsListCtrl', ['$scope', '$ionicPopup', 'RoomFactory', RoomsListCtrl])
-    .controller('RoomDetailCtrl', ['$scope', '$stateParams', '$ionicHistory', 'RoomFactory', RoomDetailCtrl]);
+    .controller('RoomDetailCtrl', ['$scope', '$stateParams', '$ionicHistory', 'RoomFactory', RoomDetailCtrl])
+    .controller('HomeCtrl', ['$scope', HomeCtrl]);
 })();
