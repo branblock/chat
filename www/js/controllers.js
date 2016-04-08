@@ -2,6 +2,31 @@
 
   'use strict';
 
+  function DashCtrl ($scope, AuthFactory) {
+    $scope.login = function(authMethod) {
+      AuthFactory.$authWithOAuthRedirect(authMethod).then(function(authData) {
+        console.log(authData);
+      }).catch(function(error) {
+        if (error.code === 'TRANSPORT_UNAVAILABLE') {
+          AuthFactory.$authWithOAuthPopup(authMethod).then(function(authData) {
+            console.dir(authData);
+          });
+        } else {
+          console.log(error);
+        }
+      });
+    };
+
+    AuthFactory.$onAuth(function(authData) {
+      if (authData === null) {
+        console.log('Not logged in yet');
+      } else {
+        console.log('Logged in as', authData.uid);
+      }
+      $scope.authData = authData;
+    });
+  }
+
   function RoomsListCtrl($scope, $ionicPopup, RoomFactory) {
     $scope.rooms = RoomFactory.allRooms;
 
@@ -24,8 +49,8 @@
   }
 
   function RoomDetailCtrl($scope, $stateParams, $ionicHistory, RoomFactory) {
-    $scope.room = RoomFactory.room($stateParams.roomId);
-    $scope.messages = RoomFactory.messages($scope.room.$id);
+    $scope.room = RoomFactory.getRoom($stateParams.roomId);
+    $scope.messages = RoomFactory.getMessages($scope.room.$id);
 
     $scope.sendMessage = function(newMessage) {
       RoomFactory.send($scope.newMessage, $scope.room.$id);
@@ -37,11 +62,12 @@
     };
   }
 
-  function HomeCtrl($scope) {}
+  function ScheduleCtrl ($scope) {}
 
   angular
-    .module('chat')
+    .module('CharterChat')
+    .controller('DashCtrl', ['$scope', 'AuthFactory', DashCtrl])
     .controller('RoomsListCtrl', ['$scope', '$ionicPopup', 'RoomFactory', RoomsListCtrl])
     .controller('RoomDetailCtrl', ['$scope', '$stateParams', '$ionicHistory', 'RoomFactory', RoomDetailCtrl])
-    .controller('HomeCtrl', ['$scope', HomeCtrl]);
+    .controller('ScheduleCtrl', ['$scope', ScheduleCtrl]);
 })();

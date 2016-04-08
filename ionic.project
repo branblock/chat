@@ -1,6 +1,6 @@
 {
   "name": "chat",
-  "app_id": "f9a75b2e",
+  "app_id": "4e5a23b2",
   "gulpStartupTasks": [
     "sass",
     "watch"

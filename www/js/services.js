@@ -9,10 +9,10 @@
 
     return {
       allRooms: rooms,
-      room: function(roomId) {
+      getRoom: function(roomId) {
         return rooms.$getRecord(roomId);
       },
-      messages: function(roomId) {
+      getMessages: function(roomId) {
         return $firebaseArray(ref.child('messages').orderByChild('roomId').equalTo(roomId));
       },
       send: function(newMessage, roomId) {
@@ -26,7 +26,13 @@
     }
   }
 
+  function AuthFactory($firebaseAuth) {
+    var ref = new Firebase('https://blockchat.firebaseio.com/');
+    return $firebaseAuth(ref);
+  }
+
   angular
-    .module('chat')
+    .module('CharterChat')
     .factory('RoomFactory', ['$firebaseArray', RoomFactory])
+    .factory('AuthFactory', ['$firebaseAuth', AuthFactory]);
 })();

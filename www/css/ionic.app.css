@@ -9740,7 +9740,7 @@ a.button {
 .bar.bar-stable .title {
   color: #000; }
 
-body {
+body, .item p {
   color: #000; }
 
 .footerInput {
