@@ -2,7 +2,7 @@
 
   'use strict';
 
-  function run($ionicPlatform) {
+  function run($ionicPlatform, $rootScope, auth, store, jwtHelper, $state) {
     $ionicPlatform.ready(function() {
       if(window.cordova && window.cordova.plugins.Keyboard) {
         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -16,25 +16,55 @@
 
   function config($stateProvider, $urlRouterProvider) {
     $stateProvider
-      .state('home', {
-        url: '/home',
-        templateUrl: '/templates/home.html',
-        controller: 'HomeCtrl'
+      // setup an abstract state for the tabs directive
+      .state('tab', {
+        url: '/tab',
+        abstract: true,
+        templateUrl: 'templates/tabs.html'
       })
-      .state('rooms', {
+      // This is the state where you'll show the login
+      .state('tab.dash', {
+        url: '/dash',
+        views: {
+        'tab-dash': {
+          templateUrl: 'templates/tab-dash.html',
+          controller: 'DashCtrl'
+          }
+        }
+      })
+      .state('tab.rooms', {
         url: '/rooms',
-        templateUrl: '/templates/rooms.html',
-        controller: 'RoomsListCtrl'
+        views: {
+        'tab-rooms': {
+          templateUrl: '/templates/tab-rooms.html',
+          controller: 'RoomsListCtrl'
+          }
+        }
       })
-      .state('room', {
+      .state('tab.room', {
         url: '/rooms/:roomId',
-        templateUrl: '/templates/room.html',
-        controller: 'RoomDetailCtrl'
+        views: {
+        'tab-rooms': {
+          templateUrl: '/templates/room.html',
+          controller: 'RoomDetailCtrl'
+          }
+        }
+      })
+      .state('tab.schedule', {
+        url: '/schedule',
+        views: {
+        'tab-schedule': {
+          templateUrl: '/templates/tab-schedule.html',
+          controller: 'ScheduleCtrl'
+          }
+        }
       });
-    $urlRouterProvider.otherwise('home');
+
+    // if none of the above states are matched, use this as the fallback
+    $urlRouterProvider.otherwise('tab/dash');
   }
 
   angular
-    .module('chat', ['ionic', 'firebase'])
-    .config(config);
+    .module('CharterChat', ['ionic', 'firebase'])
+    .config(config)
 })();
