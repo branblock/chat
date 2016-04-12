@@ -26,13 +26,36 @@
     }
   }
 
-  function AuthFactory($firebaseAuth) {
+  function AuthFactory($firebaseAuth, $state) {
     var ref = new Firebase('https://blockchat.firebaseio.com/');
-    return $firebaseAuth(ref);
+    var auth = $firebaseAuth(ref);
+    var userId;
+    var is_logged_in = false;
+
+    return {
+			signIn: function(email, password){
+				auth.$authWithPassword({
+					email: email,
+					password: password
+				}).then(function(authData){
+          $state.go('tab.user');
+					console.log('Logged in as: ' + authData.uid);
+          userId = authData.uid;
+          is_logged_in = true;
+				}).catch(function(error) {
+          console.error(error);
+        });
+			},
+			signOut: function() {
+				auth.$unauth();
+        $state.go('tab.dash');
+        console.log('User has logged out');
+			}
+    }
   }
 
   angular
     .module('CharterChat')
     .factory('RoomFactory', ['$firebaseArray', RoomFactory])
-    .factory('AuthFactory', ['$firebaseAuth', AuthFactory]);
+    .factory('AuthFactory', ['$firebaseAuth', '$state', AuthFactory]);
 })();

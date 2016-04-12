@@ -28,7 +28,7 @@
         views: {
         'tab-dash': {
           templateUrl: 'templates/tab-dash.html',
-          controller: 'DashCtrl'
+          controller: 'LoginCtrl'
           }
         }
       })
@@ -58,7 +58,16 @@
           controller: 'ScheduleCtrl'
           }
         }
-      });
+      })
+      .state('tab.user', {
+        url: '/user',
+        views: {
+        'tab-user': {
+          templateUrl: '/templates/tab-user.html',
+          controller: 'LoginCtrl'
+          }
+        }
+	    });
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('tab/dash');

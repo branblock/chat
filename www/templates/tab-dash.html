@@ -1,39 +1,30 @@
 <ion-view view-title='Charter&nbsp;<i class="ion-chatbubbles"></i>&nbsp;Chat'>
-  <ion-content>
+  <ion-content class="padding">
 
-    <ion-list ng-if="authData.facebook">
-      <ion-item class="item item-avatar item-icon-left" style="border: none; margin: 20px 75px 0">
-        <img ng-src="{{authData.facebook.cachedUserProfile.picture.data.url}}">
-        <h2 style="font-weight: 700; padding-top: 10px">{{authData.facebook.displayName}}</h2>
-      </ion-item>
-    </ion-list>
-
-    <ion-list ng-if="authData.google">
-      <ion-item class="item item-avatar item-icon-left" style="border: none; margin: 20px 75px 0">
-        <img ng-src="{{authData.google.profileImageURL}}">
-        <h2 style="font-weight: 700; padding-top: 10px">{{authData.google.displayName}}</h2>
-      </ion-item>
-    </ion-list>
-
-    <ion-list ng-if="authData.twitter">
-      <ion-item class="item item-avatar item-icon-left" style="border: none; margin: 20px 75px 0">
-        <img ng-src="{{authData.twitter.cachedUserProfile.profile_image_url_https}}">
-        <h2 style="font-weight: 700; padding-top: 10px">{{authData.twitter.displayName}}</h2>
-      </ion-item>
-    </ion-list>
-
-
-    <div class="padding" style="padding-top: 20px">
-      <button class="button icon-center ion-social-facebook button-block button-positive" ng-click="login('facebook')">
-        &nbsp;Sign in with Facebook
-      </button>
-      <button class="button icon-center ion-social-google button-block button-assertive" ng-click="login('google')">
-        &nbsp;Sign in with Google
-      </button>
-      <button class="button icon-center ion-social-twitter button-block button-calm" ng-click="login('twitter')">
-        &nbsp;Sign in with Twitter
-      </button>
+    <div class="list list-inset">
+      <h3 class="text-center">Log in</h3>
+      <label class="item item-input icon-left">
+        <i class="icon ion-at"></i>
+        <input ng-model="data.email" type="text" placeholder="Email" style="border: none; padding-left: 10px">
+      </label>
+      <label class="item item-input icon-left">
+        <i class="icon ion-key"></i>
+        <input ng-model="data.password" type="password" placeholder="Password" style="padding-left: 10px">
+      </label>
+      <button class="button button-block button-balanced ion-log-in" ng-click="loginEmail()">&nbsp;Log in</button>
     </div>
+
+    <!-- <div class="text-center">
+      <h4>Log in with a social account:</h4>
+      <button class="button ion-social-facebook button-block button-positive" ng-click="loginSocial('facebook')">&nbsp;Sign in with Facebook</button>
+      <button class="button ion-social-google button-block button-assertive" ng-click="loginSocial('google')">&nbsp;Sign in with Google</button>
+      <button class="button ion-social-twitter button-block button-calm" ng-click="loginSocial('twitter')">&nbsp;Sign in with Twitter</button>
+    </div>
+
+    <div class="text-center" style="padding-top: 10px">
+      <h4>New user?</h4>
+      <button class="button button-block ion-person-add button-energized" ng-click="modal.show()">&nbsp;Create an account</button>
+    </div> -->
 
     <p class="padding text-center" style="padding-top: 20px">Built for Larchmont Charter School.<br/>
     Created with the Ionic Framework and Firebase.<br/>
