@@ -2,29 +2,18 @@
 
   'use strict';
 
-  function DashCtrl ($scope, AuthFactory) {
-    $scope.login = function(authMethod) {
-      AuthFactory.$authWithOAuthRedirect(authMethod).then(function(authData) {
-        console.log(authData);
-      }).catch(function(error) {
-        if (error.code === 'TRANSPORT_UNAVAILABLE') {
-          AuthFactory.$authWithOAuthPopup(authMethod).then(function(authData) {
-            console.dir(authData);
-          });
-        } else {
-          console.log(error);
-        }
-      });
+  function LoginCtrl ($scope, AuthFactory, $state, $ionicModal) {
+    $scope.data = {};
+
+    $scope.loginEmail = function(email, password) {
+      var email = $scope.data.email;
+      var password = $scope.data.password;
+      AuthFactory.signIn(email, password);
     };
 
-    AuthFactory.$onAuth(function(authData) {
-      if (authData === null) {
-        console.log('Not logged in yet');
-      } else {
-        console.log('Logged in as', authData.uid);
-      }
-      $scope.authData = authData;
-    });
+    $scope.logoutEmail = function(user) {
+      AuthFactory.signOut();
+    };
   }
 
   function RoomsListCtrl($scope, $ionicPopup, RoomFactory) {
@@ -66,7 +55,7 @@
 
   angular
     .module('CharterChat')
-    .controller('DashCtrl', ['$scope', 'AuthFactory', DashCtrl])
+    .controller('LoginCtrl', ['$scope', 'AuthFactory', '$state', LoginCtrl])
     .controller('RoomsListCtrl', ['$scope', '$ionicPopup', 'RoomFactory', RoomsListCtrl])
     .controller('RoomDetailCtrl', ['$scope', '$stateParams', '$ionicHistory', 'RoomFactory', RoomDetailCtrl])
     .controller('ScheduleCtrl', ['$scope', ScheduleCtrl]);
